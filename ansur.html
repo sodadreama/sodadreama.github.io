@@ -6,6 +6,7 @@
         <title>Gray's Endocrinology - Anthropometric Measurements</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="scripts/femaledata.json"></script>
         <script language="javascript" type="text/javascript" src="scripts/jquery-3.6.1.min.js"></script>
         <script language="javascript" type="text/javascript" src="scripts/jquery.flot.js"></script>
         
@@ -26,13 +27,32 @@
             <h1>Anthropometric Measurements</h1>
             <p><strong>CONTEXT:</strong> This is a more recent counterpart of <a href="https://anthro.cs.uni-freiburg.de/">Freiburg's anthropometric measurements</a>, which, although it has a large amount of data across male and female sexes, it's rather outdated (the data were recorded in 1988) and it lacks mobile support. Hence the development of this tool that uses less outdated data (ANSUR2) and has mobile support. It has data from 1987 women and 4083 men. One may use this to better visually conceptualize how their measurements compare to other people.</p>
 
-            <p><strong>INSTRUCTIONS: </strong>TBW.</p>
-            
-            <div class = "container" id="input_measurements">
+            <p><strong>INSTRUCTIONS: </strong>All measurements are in milimeters, except for weight and height.</p>
+            <div class="row">
+                <div class="col-md">
+                    <div id="input_measurements"></div>
+                </div>
+                <div class="col-sm">
+                    <div class="" id="data_canvas" style="width:800px;height:600px"></div>
+                    <div class="row" id="genre_radios">
+                        <div class="col">
+                            <p>Gender?</p>
+                            <input type="radio" id="male" name="gender">
+                            <label for="male">Male</label> <br>
+                            <input type="radio" id="female" name="gender">
+                            <label for="female">Female</label> <br>
+                            <input type="radio" id="both" name="gender">
+                            <label for="both">Male & Female</label>
+                        </div>
+                        
+                    </div>
+                </div>
                 
             </div>
+            
+           
 
-            <div id="data_canvas" style="width:600px;height:300px"></div>
+            
             
             <script type="text/javascript" src="scripts/anthro.js"></script>
 
