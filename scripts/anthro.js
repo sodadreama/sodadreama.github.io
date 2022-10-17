@@ -17,19 +17,48 @@ let global_options = {
 function initialize() {
 }
 
-function initGenderedData(gender, race) {
+function plotMassData(gender, race) {
+    let dataset = [];
+    if($("#both-gender").checked) {
+        let index_x = measurements[x_col].toLowerCase().replace(/ /g, '').replace("(",'').replace(")",'');
+        let index_y = measurements[y_col].toLowerCase().replace(/ /g, '').replace("(",'').replace(")",'');
+        $.ajax({
+            async: false,
+            dataType: "json",
+            url: "scripts/femaledata.json",
+            
+            success: function(data){
+                let jsondata = JSON.parse(JSON.stringify(data));
+                for(let i=0;i<jsondata.length;i++) {
+                    let temp_pair = [];
+                    temp_pair.push(finished[i][index_x]);
+                    temp_pair.push(finished[i][index_y]);
+                    dataset.push(temp_pair);
+                }
+                plot = $.plot($("#data_canvas"), [dataset], global_options);
+            }
+        });
+        
+    };
+};
+
+/*function initGenderedData(gender, race) {
     let dataset = [];
     if (gender==0) {
+        let index_x = measurements[x_col].toLowerCase().replace(/ /g, '').replace("(",'').replace(")",'')
+        let index_y = measurements[y_col].toLowerCase().replace(/ /g, '').replace("(",'').replace(")",'')
         $.ajax({ //Gets female data synchronously.
             async: false,
             dataType: "json",
             url: "scripts/femaledata.json",
+            
             success: function(data) {
                 let finished = JSON.parse(JSON.stringify(data));
                 for(let i=0;i<finished.length;i++) {
                     let temp_data = [0,0]
-                    temp_data[0] = finished[i].axillaheight;
-                    temp_data[1] = finished[i].balloffootcircumference;
+                    
+                    temp_data[0] = finished[i][index_x];
+                    temp_data[1] = finished[i][index_y];
                     dataset.push(temp_data);
                 }
                 
@@ -49,7 +78,7 @@ function initGenderedData(gender, race) {
                 }
                 
             }
-        });*/
+        });
         
         console.log(dataset);
         return dataset;
@@ -58,7 +87,7 @@ function initGenderedData(gender, race) {
 
 
     
-};
+};*/
 
 function initMeasurementsInputs() { //Generates the textboxes and such so we can input measurements. It's a recursive function so that I don't manually have to create every textbox and clog the html page!
     let input_area = $("#input_measurements");
@@ -82,18 +111,20 @@ function initMeasurementsInputs() { //Generates the textboxes and such so we can
         $("#textbox"+i).on("input", function(){
             if (x_col == i) {
                 data_1[0] = $("#textbox"+i).val();
-                plotData(data_1);
+                //plotData(data_1);
             } else if (y_col == i) {
                 data_1[1] = $("#textbox"+i).val();
-                plotData([4, 6]);
+                //plotData([4, 6]);
             }
         });
     };
 };
 
 $("#plotbtn").click(function(){
-    initGenderedData(0,0);
-    plotData(initGenderedData(0,0));
+    $("#debug-div").html("<p>"+measurements[x_col].toLowerCase().replace(/ /g, '').replace("(",'').replace(")",'')+"</p><br><p>"+measurements[y_col].toLowerCase().replace(/ /g, '').replace("(",'').replace(")",'')+"</p>");
+    plotMassData();
+    //plot = $.plot($("#data_canvas"), [initGenderedData(0)], global_options);
+    
 });
 
 
