@@ -2,6 +2,11 @@ const measurements = ["Abdominal Extension Depth (Sitting)","Acromial Height","A
 
 const index_measurements = [];
 
+let x_col = 1;
+let y_col = 2;
+
+let totaldata = [];
+
 let global_options = {
     series: {
         lines: {show: false}, //Don't show lines, show points though
@@ -9,7 +14,10 @@ let global_options = {
     }
 };
 
-function initData(gender) {
+function initialize() {
+}
+
+function initGenderedData(gender, race) {
     let dataset = [];
     if (gender==0) {
         $.ajax({ //Gets female data synchronously.
@@ -27,53 +35,67 @@ function initData(gender) {
                 
             }
         });
+        /*$.ajax({ //Gets male data synchronously.
+            async: false,
+            dataType: "json",
+            url: "scripts/maledata.json",
+            success: function(data) {
+                let finished = JSON.parse(JSON.stringify(data));
+                for(let i=0;i<finished.length;i++) {
+                    let temp_data = [0,0]
+                    temp_data[0] = finished[i].axillaheight;
+                    temp_data[1] = finished[i].balloffootcircumference;
+                    dataset.push(temp_data);
+                }
+                
+            }
+        });*/
+        
         console.log(dataset);
-        plot = $.plot($("#data_canvas"), [dataset], global_options);
+        return dataset;
+        //plot = $.plot($("#data_canvas"), [dataset], global_options);
     }
 
 
     
 };
 
-let data_1 = [0,0];
-
-let x_axis;
-let y_axis;
-
-let x_col =3;
-let y_col =5;
-
-let sel_gender = 1;
-
 function initMeasurementsInputs() { //Generates the textboxes and such so we can input measurements. It's a recursive function so that I don't manually have to create every textbox and clog the html page!
     let input_area = $("#input_measurements");
     let template = "";
     for(let i=0;i<measurements.length;i++) {
         //console.log("testing");
-        input_area.append("<div class='mb-3'><p id='text"+i+"'>"+measurements[i]+"</p><input id='textbox"+i+"' type='text' class='form-control bg-dark text-white' style='width:200px'></input></div>");
+        input_area.append("<div class='mb-3'><input id='textbox"+i+"' type='text' class='form-control input-sm bg-dark text-white'></input><label for='textbox"+i+"' id='text"+i+"'>"+measurements[i]+"</label></div>");
 
         $("#text"+i+"").click(function(e) {
             if (e.ctrlKey && x_col != i) {
-                x_col = i+1;
-                console.log(x_col);
+                x_col = i;
+                //console.log(x_col);
+                $("#axis-label").html("<p>X axis: <strong>"+x_col+"</strong></p><br><p>Y axis: <strong>"+y_col+"</strong></p>");
             } else if(y_col != i) {
-                y_col = i+1;
-                console.log(y_col);
+                y_col = i;
+                //console.log(y_col);
+               $("#axis-label").html("<p>X axis: <strong>"+x_col+"</strong></p><br><p>Y axis: <strong>"+y_col+"</strong></p>");
             }
         });
 
         $("#textbox"+i).on("input", function(){
-            if (x_axis == "textbox"+i || y_axis == "textbox"+i) {
-                initData(0);
+            if (x_col == i) {
+                data_1[0] = $("#textbox"+i).val();
+                plotData(data_1);
+            } else if (y_col == i) {
+                data_1[1] = $("#textbox"+i).val();
+                plotData([4, 6]);
             }
         });
     };
 };
 
-function testPrintJsonData() {
-    
+$("#plotbtn").click(function(){
+    initGenderedData(0,0);
+    plotData(initGenderedData(0,0));
+});
 
-};
 
 var d1 = [[1,10],[5,3],[6,4],[6,5]]; //Sample data
 let plot;
@@ -83,7 +105,7 @@ function plotData(data) {
 };
 
 $(document).ready(
-    initData(0),
-    //plotData(d1),
-    initMeasurementsInputs()
+    initMeasurementsInputs(),
+    initGenderedData(0,0),
+    plotData([0,0])
 );//When document is loaded, run the script
