@@ -91,7 +91,6 @@ function plotMassData(gender, race) {
 
 function initMeasurementsInputs() { //Generates the textboxes and such so we can input measurements. It's a recursive function so that I don't manually have to create every textbox and clog the html page!
     let input_area = $("#input_measurements");
-    let template = "";
     for(let i=0;i<measurements.length;i++) {
         //console.log("testing");
         input_area.append("<div class='mb-3'><input id='textbox"+i+"' type='text' class='form-control input-sm bg-dark text-white'></input><label for='textbox"+i+"' id='text"+i+"'>"+measurements[i]+"</label></div>");
