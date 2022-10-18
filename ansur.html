@@ -9,70 +9,45 @@
         <script type="text/javascript" src="scripts/femaledata.json"></script>
         <script language="javascript" type="text/javascript" src="scripts/jquery-3.6.1.min.js"></script>
         <script language="javascript" type="text/javascript" src="scripts/jquery.flot.js"></script>
-        
     </head>
   
     <body class="bg-dark">
-
         <div id="header"></div>
-       
         <script language="javascript" type="text/javascript">
             $(document).ready(function() {
                 $("#header").load("template/header.html");
             });
         </script>
-
-
         <div class="container p-5 my-5 text-white">
             <h1>Anthropometric Measurements</h1>
             <p><strong>CONTEXT:</strong> This is a more recent counterpart of <a href="https://anthro.cs.uni-freiburg.de/">Freiburg's anthropometric measurements</a>, which, although it has a large amount of data across male and female sexes, it's rather outdated (the data were recorded in 1988). Hence the development of this tool that uses less outdated information (ANSUR2, 2012). It has data from 1987 women and 4083 men. One may use this to better visually conceptualize how their measurements compare to other people.</p>
-
             <p><strong>INSTRUCTIONS: </strong>All measurements are in milimeters, except for weight and height. Ctrl+click label to select as y-axis, click regularly to select as x-axis, choose the parameters to the right, and then click plot data.</p>
             <div class="row">
                 <div id="input_measurements" style="height:600px" class="form-group overflow-auto col-lg"></div>
                 <div class="col-sm">
                     <div class="" id="data_canvas" style="width:800px;height:600px"></div>
-                    <div class="row" id="genre_radios">
-                        
-                        
-                    </div>
                 </div>
                 <div class="col">
                     <button type="button" id="plotbtn" class="btn btn-primary">Plot Data</button><br>
-                            <p><strong>Display Gender?</strong></p>
-                            
+                            <p><strong>Display data for:</strong></p>
                             <input type="radio" id="male" name="gender">
                             <label for="male">Male</label> <br>
-                            <input type="radio" id="female" name="gender">
+                            <input type="radio" id="female" name="gender" checked>
                             <label for="female">Female</label> <br>
-                            <input type="radio" id="both_gender" name="gender" checked>
-                            <label for="both_gender">Both</label>
+                            <!--<input type="radio" id="both_gender" name="gender" checked>
+                            <label for="both_gender">Both</label>!-->
                             <br>
-                            <p><strong>Display Race?</strong></p>
-                            
+                            <p><strong>Display data for: </strong></p>
                             <input type="radio" id="black" name="race">
                             <label for="black">Black</label> <br>
                             <input type="radio" id="white" name="race">
                             <label for="white">White</label> <br>
                             <input type="radio" id="both_race" name="race" checked>
                             <label for="both_race">Both</label>
-                            
-                            
-                            
                             <div id="axis-label"></div>
                  </div>
             </div>
-            
-           
-
-            
-            
-            <script type="text/javascript" src="scripts/anthro.js"></script>
-
-                        
+            <script type="text/javascript" src="scripts/anthro.js"></script>         
         </div>
-       
     </body>
-
-
 </html>

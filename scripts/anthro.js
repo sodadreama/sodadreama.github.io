@@ -3,8 +3,7 @@ const measurements = ["Abdominal Extension Depth (Sitting)","Acromial Height","A
 let x_col = 1;
 let y_col = 2;
 
-let plot;
-let data_1 = [];
+let data_1 = [0,0];
 
 let global_options = {
     series: {
@@ -13,7 +12,9 @@ let global_options = {
     }
 };
 
+
 function generateMassData(url) {
+    let dataset = [];
     $.ajax({   
         async: false,
         dataType: "json",
@@ -21,19 +22,19 @@ function generateMassData(url) {
         success: function(data){
             let index_x = measurements[x_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,'');
             let index_y = measurements[y_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,'');
-            let dataset = [];
+            
             let jsondata = JSON.parse(JSON.stringify(data));
             for(let i=0;i<jsondata.length;i++) {
                 let temp_pair = [];
                 temp_pair.push(jsondata[i][index_x]);
-               
                 temp_pair.push(jsondata[i][index_y]);
                 dataset.push(temp_pair);
             }
             //console.log(dataset);
-            return dataset;
+            
         }
     });
+    return [dataset];
 }
 
 function plotMassData() {
@@ -46,6 +47,7 @@ function plotMassData() {
             bars: {show: false},
             points: {show: true},
         };
+        //console.log(femaleseries.data);
         let maleseries = {
             color: 1,
             data: generateMassData("scripts/maledata.json"),
@@ -53,17 +55,17 @@ function plotMassData() {
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
-        }
+        };
         let myseries = {
             color: 2,
-            data: data_1,
+            data: [data_1],
             label: "YOU",
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
-        }
-        plot = $.plot($("#data_canvas"), [femaleseries, maleseries], global_options);
-    } else {
+        };
+        let plot = $.plot($("#data_canvas"), generateMassData("scripts/femaledata.json"), global_options);
+    } else if($("#female").is(":checked")) {
         let genderseries = {
             color: 1,
             data: [generateMassData("scripts/maledata.json")],
@@ -72,6 +74,17 @@ function plotMassData() {
             bars: {show: false},
             points: {show: true},
         }
+        let plot = $.plot($("#data_canvas"), generateMassData("scripts/femaledata.json"), global_options);
+    } else if($("#male").is(":checked")) {
+        let genderseries = {
+            color: 1,
+            data: [[generateMassData("scripts/maledata.json")]],
+            label: "Male",
+            lines: {show: false},
+            bars: {show: false},
+            points: {show: true},
+        }
+        let plot = $.plot($("#data_canvas"), generateMassData("scripts/maledata.json"), global_options);
     };
 };
 
@@ -112,13 +125,8 @@ $("#plotbtn").click(function(){
     plotMassData();
 });
 
-
-
-function plotData(data) {
-    plot = $.plot($("#data_canvas"), [data], global_options); //Plot the data
-};
-
 $(document).ready(
     initMeasurementsInputs(),
     plotMassData(),
+    console.log(generateMassData("scripts/femaledata.json")),
 );
