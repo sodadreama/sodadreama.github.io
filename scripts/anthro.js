@@ -1,4 +1,4 @@
-const measurements = ["Abdominal Extension Depth (Sitting)","Acromial Height","Acromion Radial Length","Ankle Circumference","Axilla Height","Ball of Foot Circumference","Ball of Foot Length","Biacromial Breadth","Biceps Circumference (Flexed)","Bicristal Breadth","Bideltoid Breadth","Bimalleolar Breadth","Bitragion Chin Arc","Bitragion Submandibular Arc","Bizygomatic Breadth","Buttock Circumference","Buttock Depth","Buttock Height","Buttock Knee Length","Buttock Popliteal Length","Calf Circumference","Cervical Height","Chest Breadth","Chest Circumference","Chest Depth","Chest Height","Crotch Height","Crotch Length Omphalion","Crotch Length Posterior Omphalion","Ear Breadth","Ear Length","Ear Protrusion","Elbow Rest Height","Eye Height Sitting","Foot Breadth Horizontal","Foot Length","Forearm Center of Grip Length","Forearm Circumference (flexed)","Forearm Breadth","Forearm Hand Length","Functional Leg Length","Hand Breadth","Hand Circumference","Hand Length","Head Breadth","Head Circumference","Head Length","Heel Ankle Circumference","Heel Breadth","Hip Breadth","Hip Breadth (sitting)","Iliocristal Height","Interpupillary Breadth","Interscyei","Interscyeii","Knee Height Mid-patella","Knee Height (sitting)","Lateral Femoral Epicondyle Height","Lateral Malleolus Height","Lower Thigh Circumference","Mentonsellion Length","Neck Circumference","Neck Circumference (base)","Overhead Fingertip Reach (sitting)","Palm Length","Popliteal Height","Radial-stylion Length","Shoulder Circumference","Shoulder-elbow Length","Shoulder Length","Sitting Height","Sleeve Length Spine Wrist","Sleeve Outseam","Span","Stature","Suprasternal Height","Tenth Rib Height","Thigh Circumference","Thigh Clearance","Thumbtip Reach","Tibial Height","Bitragion Top of Head","Trochanterion Height","Vertical Trunk Circumference","Waist-back Length","Waist Breadth","Waist Circumference","Waist depth","Waist Front Length (sitting)","Waist-height Omphalion","Weight(kg)","Wrist Circumference","Wrist Height","Height (in)","Weight (lbs)"];
+const measurements = ["Abdominal Extension Depth (Sitting)","Acromial Height","Acromion Radial Length","Ankle Circumference","Axilla Height","Ball of Foot Circumference","Ball of Foot Length","Biacromial Breadth","Biceps Circumference (Flexed)","Bicristal Breadth","Bideltoid Breadth","Bimalleolar Breadth","Bitragion Chin Arc","Bitragion Submandibular Arc","Bizygomatic Breadth","Buttock Circumference","Buttock Depth","Buttock Height","Buttock Knee Length","Buttock Popliteal Length","Calf Circumference","Cervical Height","Chest Breadth","Chest Circumference","Chest Depth","Chest Height","Crotch Height","Crotch Length Omphalion","Crotch Length Posterior Omphalion","Ear Breadth","Ear Length","Ear Protrusion","Elbow Rest Height","Eye Height (sitting)","Foot Breadth Horizontal","Foot Length","Forearm Center of Grip Length","Forearm Circumference (flexed)","Forearm Breadth","Forearm Hand Length","Functional Leg Length","Hand Breadth","Hand Circumference","Hand Length","Head Breadth","Head Circumference","Head Length","Heel Ankle Circumference","Heel Breadth","Hip Breadth","Hip Breadth (sitting)","Iliocristal Height","Interpupillary Breadth","Interscyei","Interscyeii","Knee Height Mid-patella","Knee Height (sitting)","Lateral Femoral Epicondyle Height","Lateral Malleolus Height","Lower Thigh Circumference","Mentonsellion Length","Neck Circumference","Neck Circumference (base)","Overhead Fingertip Reach (sitting)","Palm Length","Popliteal Height","Radial Styloid Length","Shoulder Circumference","Shoulder-elbow Length","Shoulder Length","Sitting Height","Sleeve Length Spine Wrist","Sleeve Outseam","Span","Stature","Suprasternal Height","Tenth Rib Height","Thigh Circumference","Thigh Clearance","Thumbtip Reach","Tibial Height","Bitragion Top of Head","Trochanterion Height","Vertical Trunk Circumference","Waist-back Length","Waist Breadth","Waist Circumference","Waist depth","Waist Front Length (sitting)","Waist-height Omphalion","Weight(kg)","Wrist Circumference","Wrist Height","Height (in)"];
 
 let x_col = 1;
 let y_col = 2;
@@ -12,7 +12,6 @@ let global_options = {
     }
 };
 
-
 function generateMassData(url) {
     let dataset = [];
     $.ajax({   
@@ -20,9 +19,8 @@ function generateMassData(url) {
         dataType: "json",
         url: url,
         success: function(data){
-            let index_x = measurements[x_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,'');
-            let index_y = measurements[y_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,'');
-            
+            let index_x = measurements[x_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,'').replace(/-/g, '');
+            let index_y = measurements[y_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,'').replace(/-/g, '');
             let jsondata = JSON.parse(JSON.stringify(data));
             for(let i=0;i<jsondata.length;i++) {
                 let temp_pair = [];
@@ -30,8 +28,6 @@ function generateMassData(url) {
                 temp_pair.push(jsondata[i][index_y]);
                 dataset.push(temp_pair);
             }
-            //console.log(dataset);
-            
         }
     });
     return dataset;
@@ -49,7 +45,6 @@ function plotMassData() {
             bars: {show: false},
             points: {show: true},
         };
-        //console.log(femaleseries.data);
         let maleseries = {
             color: 1,
             data: mascdata,
@@ -76,19 +71,35 @@ function plotMassData() {
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
-        }
-        //console.log(genderseries.data);
-        let plot = $.plot($("#data_canvas"), [genderseries], global_options);
+        };
+        let myseries = {
+            color: 2,
+            data: [data_1],
+            label: "YOU",
+            lines: {show: false},
+            bars: {show: false},
+            points: {show: true},
+        };
+        let plot = $.plot($("#data_canvas"), [genderseries, myseries], global_options);
     } else if($("#male").is(":checked")) {
+        let genderdata = generateMassData("scripts/maledata.json");
         let genderseries = {
             color: 1,
-            data: [[generateMassData("scripts/maledata.json")]],
+            data: genderdata,
             label: "Male",
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
-        }
-        let plot = $.plot($("#data_canvas"), generateMassData("scripts/maledata.json"), global_options);
+        };
+        let myseries = {
+            color: 2,
+            data: [data_1],
+            label: "YOU",
+            lines: {show: false},
+            bars: {show: false},
+            points: {show: true},
+        };
+        let plot = $.plot($("#data_canvas"), [genderseries, myseries], global_options);
     };
 };
 
@@ -124,13 +135,10 @@ function initMeasurementsInputs() { //Generates the textboxes and such so we can
 };
 
 $("#plotbtn").click(function(){
-    console.log(measurements[x_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,''));
-    console.log(measurements[y_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,''));
     plotMassData();
 });
 
 $(document).ready(
     initMeasurementsInputs(),
     plotMassData(),
-    console.log(generateMassData("scripts/femaledata.json")),
 );
