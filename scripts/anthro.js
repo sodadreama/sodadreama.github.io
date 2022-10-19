@@ -34,14 +34,16 @@ function generateMassData(url) {
             
         }
     });
-    return [dataset];
+    return dataset;
 }
 
 function plotMassData() {
     if($("#both_gender").is(":checked")) {
+        let femdata = generateMassData("scripts/femaledata.json");
+        let mascdata = generateMassData("scripts/maledata.json");
         let femaleseries = {
             color: 0,
-            data: generateMassData("scripts/femaledata.json"),
+            data: femdata,
             label: "Female",
             lines: {show: false},
             bars: {show: false},
@@ -50,7 +52,7 @@ function plotMassData() {
         //console.log(femaleseries.data);
         let maleseries = {
             color: 1,
-            data: generateMassData("scripts/maledata.json"),
+            data: mascdata,
             label: "Male",
             lines: {show: false},
             bars: {show: false},
@@ -64,17 +66,19 @@ function plotMassData() {
             bars: {show: false},
             points: {show: true},
         };
-        let plot = $.plot($("#data_canvas"), generateMassData("scripts/femaledata.json"), global_options);
+        let plot = $.plot($("#data_canvas"), [femaleseries,maleseries,myseries], global_options);
     } else if($("#female").is(":checked")) {
+        let genderdata = generateMassData("scripts/femaledata.json");
         let genderseries = {
-            color: 1,
-            data: [generateMassData("scripts/maledata.json")],
-            label: "Male",
+            color: 0,
+            data: genderdata,
+            label: "Female",
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
         }
-        let plot = $.plot($("#data_canvas"), generateMassData("scripts/femaledata.json"), global_options);
+        //console.log(genderseries.data);
+        let plot = $.plot($("#data_canvas"), [genderseries], global_options);
     } else if($("#male").is(":checked")) {
         let genderseries = {
             color: 1,
