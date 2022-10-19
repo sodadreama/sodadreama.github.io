@@ -141,26 +141,27 @@ function initMeasurementsInputs() { //Generates the textboxes and such so we can
         $("#text"+i+"").click(function(e) {
             $("#axis-label").html("<p>Showing <strong>"+measurements[x_col]+"</strong> (X-axis) in relation to <strong>"+measurements[y_col]+" </strong>(Y-axis)</p>");
             if (e.ctrlKey) {
-                x_col = i;
+                if (i == y_col) { //If one is the other, just swap it around. If not, proceed normally
+                    y_col = x_col;
+                    x_col = i;
+                } else {
+                    x_col = i;
+                };
             } else {
-                y_col = i;
+                if (i == x_col) { //If one is the other, just swap it around. If not, proceed normally
+                    x_col = y_col;
+                    y_col = i;
+                } else {
+                    y_col = i;
+                };
             }
         });
 
         $("#textbox"+i).on("input", function(){
             if (x_col == i) {
-                if (measurements[x_col] == "Weight (kg)") {
-                    data_1[0] = $("#textbox"+i).val()*10;
-                } else {
-                    data_1[0] = $("#textbox"+i).val();
-                }
-                
+                data_1[0] = $("#textbox"+i).val();
             } else if (y_col == i) {
-                if (measurements[y_col] == "Weight (kg)") {
-                    data_1[1] = $("#textbox"+i).val()*10;
-                } else {
-                    data_1[1] = $("#textbox"+i).val();
-                }
+                data_1[1] = $("#textbox"+i).val();
             }
         });
     };
@@ -194,6 +195,8 @@ $("#both_race").change(function(){
 
 
 $("#plotbtn").click(function(){
+    console.log(measurements[x_col]);
+    console.log(measurements[y_col]);
     plotMassData();
 });
 
