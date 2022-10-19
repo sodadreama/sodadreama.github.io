@@ -1,7 +1,15 @@
 /*Race constraints: 1 = White, 2 = Black, 3 = Hispanic, 4 = Asian, 5 = Native American, 
 6 = Pacific Islander, 8 = Other*/
 
-const measurements = ["Abdominal Extension Depth (Sitting)","Acromial Height","Acromion Radial Length","Ankle Circumference","Axilla Height","Ball of Foot Circumference","Ball of Foot Length","Biacromial Breadth","Biceps Circumference (Flexed)","Bicristal Breadth","Bideltoid Breadth","Bimalleolar Breadth","Bitragion Chin Arc","Bitragion Submandibular Arc","Bizygomatic Breadth","Buttock Circumference","Buttock Depth","Buttock Height","Buttock Knee Length","Buttock Popliteal Length","Calf Circumference","Cervical Height","Chest Breadth","Chest Circumference","Chest Depth","Chest Height","Crotch Height","Crotch Length Omphalion","Crotch Length Posterior Omphalion","Ear Breadth","Ear Length","Ear Protrusion","Elbow Rest Height","Eye Height (sitting)","Foot Breadth Horizontal","Foot Length","Forearm Center of Grip Length","Forearm Circumference (flexed)","Forearm Breadth","Forearm Hand Length","Functional Leg Length","Hand Breadth","Hand Circumference","Hand Length","Head Breadth","Head Circumference","Head Length","Heel Ankle Circumference","Heel Breadth","Hip Breadth","Hip Breadth (sitting)","Iliocristal Height","Interpupillary Breadth","Interscyei","Interscyeii","Knee Height Mid-patella","Knee Height (sitting)","Lateral Femoral Epicondyle Height","Lateral Malleolus Height","Lower Thigh Circumference","Mentonsellion Length","Neck Circumference","Neck Circumference (base)","Overhead Fingertip Reach (sitting)","Palm Length","Popliteal Height","Radial Styloid Length","Shoulder Circumference","Shoulder-elbow Length","Shoulder Length","Sitting Height","Sleeve Length Spine Wrist","Sleeve Outseam","Span","Stature","Suprasternal Height","Tenth Rib Height","Thigh Circumference","Thigh Clearance","Thumbtip Reach","Tibial Height","Bitragion Top of Head","Trochanterion Height","Vertical Trunk Circumference","Waist-back Length","Waist Breadth","Waist Circumference","Waist depth","Waist Front Length (sitting)","Waist-height Omphalion","Weight(kg)","Wrist Circumference","Wrist Height","Height (in)"];
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+const measurements = ["Abdominal Extension Depth (Sitting)","Acromial Height","Acromion Radial Length","Ankle Circumference","Axilla Height","Ball of Foot Circumference","Ball of Foot Length","Biacromial Breadth","Biceps Circumference (Flexed)","Bicristal Breadth","Bideltoid Breadth","Bimalleolar Breadth","Bitragion Chin Arc","Bitragion Submandibular Arc","Bizygomatic Breadth","Buttock Circumference","Buttock Depth","Buttock Height","Buttock-Knee Length","Buttock-Popliteal Length","Calf Circumference","Cervical Height","Chest Breadth","Chest Circumference","Chest Depth","Chest Height","Crotch Height","Crotch Length (Omphalion)","Crotch Length Posterior (Omphalion)","Ear Breadth","Ear Length","Ear Protrusion","Elbow Rest Height","Eye Height (sitting)","Foot Breadth Horizontal","Foot Length","Forearm Center of Grip Length","Forearm Circumference (flexed)","Forearm Breadth","Forearm-Hand Length","Functional Leg Length","Hand Breadth","Hand Circumference","Hand Length","Head Breadth","Head Circumference","Head Length","Heel-Ankle Circumference","Heel Breadth","Hip Breadth","Hip Breadth (sitting)","Iliocristal Height","Interpupillary Breadth","Interscye I","Interscye II","Knee Height Mid-patella","Knee Height (sitting)","Lateral Femoral Epicondyle Height","Lateral Malleolus Height","Lower Thigh Circumference","Menton-Sellion Length","Neck Circumference","Neck Circumference (base)","Overhead Fingertip Reach (sitting)","Palm Length","Popliteal Height","Radiale-Stylion Length","Shoulder Circumference","Shoulder-Elbow Length","Shoulder Length","Sitting Height","Sleeve Length Spine-Wrist","Sleeve Outseam","Span","Stature","Suprasternale Height","Tenth Rib Height","Thigh Circumference","Thigh Clearance","Thumbtip Reach","Tibial Height","Bitragion Top of Head","Trochanterion Height","Vertical Trunk Circumference","Waist Back Length","Waist Breadth","Waist Circumference","Waist depth","Waist Front Length (sitting)","Waist-height (Omphalion)","Weight (kg)","Wrist Circumference","Wrist Height","Height (in)"];
+
+const tooltips = [
+    ""
+];
 
 let x_col = 1;
 let y_col = 2;
@@ -142,9 +150,18 @@ function initMeasurementsInputs() { //Generates the textboxes and such so we can
 
         $("#textbox"+i).on("input", function(){
             if (x_col == i) {
-                data_1[0] = $("#textbox"+i).val();
+                if (measurements[x_col] == "Weight (kg)") {
+                    data_1[0] = $("#textbox"+i).val()*10;
+                } else {
+                    data_1[0] = $("#textbox"+i).val();
+                }
+                
             } else if (y_col == i) {
-                data_1[1] = $("#textbox"+i).val();
+                if (measurements[y_col] == "Weight (kg)") {
+                    data_1[1] = $("#textbox"+i).val()*10;
+                } else {
+                    data_1[1] = $("#textbox"+i).val();
+                }
             }
         });
     };
