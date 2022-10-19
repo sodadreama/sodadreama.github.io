@@ -139,7 +139,7 @@ function initMeasurementsInputs() { //Generates the textboxes and such so we can
         );
 
         $("#text"+i+"").click(function(e) {
-            $("#axis-label").html("<p>Showing <strong>"+measurements[x_col]+"</strong> (X-axis) in relation to <strong>"+measurements[y_col]+" </strong>(Y-axis)</p>");
+            $("#axis-label").html("<p class='text-center'>Showing <strong>"+measurements[x_col]+"</strong> (X-axis) in relation to <strong>"+measurements[y_col]+" </strong>(Y-axis)</p>");
             if (e.ctrlKey) {
                 if (i == y_col) { //If one is the other, just swap it around. If not, proceed normally
                     y_col = x_col;
