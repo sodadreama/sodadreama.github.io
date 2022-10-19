@@ -1,7 +1,12 @@
+/*Race constraints: 1 = White, 2 = Black, 3 = Hispanic, 4 = Asian, 5 = Native American, 
+6 = Pacific Islander, 8 = Other*/
+
 const measurements = ["Abdominal Extension Depth (Sitting)","Acromial Height","Acromion Radial Length","Ankle Circumference","Axilla Height","Ball of Foot Circumference","Ball of Foot Length","Biacromial Breadth","Biceps Circumference (Flexed)","Bicristal Breadth","Bideltoid Breadth","Bimalleolar Breadth","Bitragion Chin Arc","Bitragion Submandibular Arc","Bizygomatic Breadth","Buttock Circumference","Buttock Depth","Buttock Height","Buttock Knee Length","Buttock Popliteal Length","Calf Circumference","Cervical Height","Chest Breadth","Chest Circumference","Chest Depth","Chest Height","Crotch Height","Crotch Length Omphalion","Crotch Length Posterior Omphalion","Ear Breadth","Ear Length","Ear Protrusion","Elbow Rest Height","Eye Height (sitting)","Foot Breadth Horizontal","Foot Length","Forearm Center of Grip Length","Forearm Circumference (flexed)","Forearm Breadth","Forearm Hand Length","Functional Leg Length","Hand Breadth","Hand Circumference","Hand Length","Head Breadth","Head Circumference","Head Length","Heel Ankle Circumference","Heel Breadth","Hip Breadth","Hip Breadth (sitting)","Iliocristal Height","Interpupillary Breadth","Interscyei","Interscyeii","Knee Height Mid-patella","Knee Height (sitting)","Lateral Femoral Epicondyle Height","Lateral Malleolus Height","Lower Thigh Circumference","Mentonsellion Length","Neck Circumference","Neck Circumference (base)","Overhead Fingertip Reach (sitting)","Palm Length","Popliteal Height","Radial Styloid Length","Shoulder Circumference","Shoulder-elbow Length","Shoulder Length","Sitting Height","Sleeve Length Spine Wrist","Sleeve Outseam","Span","Stature","Suprasternal Height","Tenth Rib Height","Thigh Circumference","Thigh Clearance","Thumbtip Reach","Tibial Height","Bitragion Top of Head","Trochanterion Height","Vertical Trunk Circumference","Waist-back Length","Waist Breadth","Waist Circumference","Waist depth","Waist Front Length (sitting)","Waist-height Omphalion","Weight(kg)","Wrist Circumference","Wrist Height","Height (in)"];
 
 let x_col = 1;
 let y_col = 2;
+
+let global_race_constraint = 9
 
 let data_1 = [0,0];
 
@@ -23,13 +28,24 @@ function generateMassData(url) {
             let index_y = measurements[y_col].toLowerCase().replace(/ /g, '').replace(/[\])}[{(]/g,'').replace(/[\])}[{(]/g,'').replace(/-/g, '');
             let jsondata = JSON.parse(JSON.stringify(data));
             for(let i=0;i<jsondata.length;i++) {
-                let temp_pair = [];
-                temp_pair.push(jsondata[i][index_x]);
-                temp_pair.push(jsondata[i][index_y]);
-                dataset.push(temp_pair);
+                if (global_race_constraint != 9) {
+                    if (jsondata[i].SubjectNumericRace == global_race_constraint) {
+                        let temp_pair = [];
+                        temp_pair.push(jsondata[i][index_x]);
+                        temp_pair.push(jsondata[i][index_y]);
+                        dataset.push(temp_pair);
+                    }
+                } else {
+                    let temp_pair = [];
+                    temp_pair.push(jsondata[i][index_x]);
+                    temp_pair.push(jsondata[i][index_y]);
+                    dataset.push(temp_pair);
+                };
+                
             }
         }
     });
+    console.log(global_race_constraint);
     return dataset;
 }
 
@@ -40,7 +56,7 @@ function plotMassData() {
         let femaleseries = {
             color: 0,
             data: femdata,
-            label: "Female",
+            label: "Female ["+femdata.length+"]",
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
@@ -48,7 +64,7 @@ function plotMassData() {
         let maleseries = {
             color: 1,
             data: mascdata,
-            label: "Male",
+            label: "Male ["+mascdata.length+"]",
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
@@ -67,11 +83,11 @@ function plotMassData() {
         let genderseries = {
             color: 0,
             data: genderdata,
-            label: "Female",
+            label: "Female ["+genderdata.length+"]",
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
-        };
+        }; 
         let myseries = {
             color: 2,
             data: [data_1],
@@ -86,7 +102,7 @@ function plotMassData() {
         let genderseries = {
             color: 1,
             data: genderdata,
-            label: "Male",
+            label: "Male ["+genderdata.length+"]",
             lines: {show: false},
             bars: {show: false},
             points: {show: true},
@@ -134,11 +150,38 @@ function initMeasurementsInputs() { //Generates the textboxes and such so we can
     };
 };
 
+$("#black").change(function(){
+    global_race_constraint = 2;
+});
+$("#white").change(function(){
+    global_race_constraint = 1;
+});
+$("#hispanic").change(function(){
+    global_race_constraint = 3;
+});
+$("#asian").change(function(){
+    global_race_constraint = 4;
+});
+$("#namerican").change(function(){
+    global_race_constraint = 5;
+});
+$("#pislander").change(function(){
+    global_race_constraint = 6;
+});
+
+$("#other-race").change(function(){
+    global_race_constraint = 8;
+});
+$("#both_race").change(function(){
+    global_race_constraint = 9;
+});
+
+
 $("#plotbtn").click(function(){
     plotMassData();
 });
 
 $(document).ready(
     initMeasurementsInputs(),
-    plotMassData(),
+    $.plot($("#data_canvas"), [], global_options),
 );
