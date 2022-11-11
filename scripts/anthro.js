@@ -133,7 +133,7 @@ function initMeasurementsInputs() { //Generates the textboxes and such so we can
     for(let i=0;i<measurements.length;i++) {
         input_area.append(`
         <div class='mb-3'>
-            <input id='textbox`+i+`' type='text' class='form-control input-sm bg-dark text-white'></input>
+            <input id='textbox`+i+`' type='text' class='form-control input-sm'></input>
             <label for='textbox`+i+`' id='text`+i+`'>`+measurements[i]+`</label>
         </div>`
         );

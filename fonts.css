@@ -1,0 +1,12 @@
+.pfd{
+    font-family: 'Playfair Display', serif;
+}
+
+.fixed-bg{
+    background-image: url("collage.png");
+    min-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

@@ -3,27 +3,34 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
     <!--The hex code for the accent is #5691FF !-->
     <head>
-        <title>Gray's Endocrinology</title>
+        <title>gray</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script language="javascript" type="text/javascript" src="scripts/jquery-3.6.1.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="fonts.css">
     </head>
   
-    <body class="bg-dark">
+    <body class="bg-light">
         <div id="header"></div>
         <script language="javascript" type="text/javascript">
             $(document).ready(function() {
                 $("#header").load("template/header.html");
             });
         </script>
-        
+        <div class="fixed-bg"></div>
 
-        <div class="container p-5 my-5 text-white">
-            <h1>Gray's Endocrinology</h1>
-            <p>Welcome! This is a surface-level guide to the pharmacological aspect of transitioning, whether it be case studies, the common uses for various medications, some basic anatomy involved with these regimens, or some edge-case medications that may be useful, this is where to look!</p>
-            <p>The information on this website usually comes from my notes on various hormone regimens. If I have missed anything or there is some new information out there, contact me on discord at fishinthepool#6461</p>
-            <p>If you are just starting (DIY) HRT, your best bet here would be to start reading up on <a href="estrogen-basic.html">estrogens</a> which are the main hormone for feminization.</p>
-                        
+        <div class="container pfd p-5 my-5">
+            <h1 class="text-center">gray</h1>
+            <p class="text-left">welcome to my page! this is a dumping ground for things i've made.</p>
+            <div class="row border-top">
+                <div class="col-sm">
+                    <a href="ansur.html"><img width="400" height="300" src="anthrom.png"></a>
+                </div>
+            </div>
         </div>
         <div id="footer"></div>
         <script language="javascript" type="text/javascript">
