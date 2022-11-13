@@ -195,8 +195,8 @@ $("#both_race").change(function(){
 
 
 $("#plotbtn").click(function(){
-    console.log(measurements[x_col]);
-    console.log(measurements[y_col]);
+    //console.log(measurements[x_col]);
+    //console.log(measurements[y_col]);
     plotMassData();
 });
 

@@ -17,9 +17,7 @@
     <body class="main-bg">
         <div id="header"></div>
         <script language="javascript" type="text/javascript">
-            $(document).ready(function() {
-                $("#header").load("template/header.html");
-            });
+            
         </script>
         <div class="fixed-bg"></div>
 
@@ -28,17 +26,21 @@
             <p class="text-left">welcome to my page! this is a dumping ground for things i've made.</p>
             <div class="row border-top">
                 <div class="col-sm">
+                    <h3>Software</h3>
                     <a href="ansur.html">ANSUR 2012 Data Visualizer</a>
+                    <h3>Essays</h3>
+                    <a href="bcn.pdf">Biopolitics & the Cyborg in <i>The Neuromancer</i></a>
                 </div>
             </div>
         </div>
         <div id="footer"></div>
-        <script language="javascript" type="text/javascript">
-            $(document).ready(function() {
-                $("#footer").load("template/footer.html");
-            });
-        </script>
+        
     </body>
-
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function() {
+            $("#footer").load("template/footer.html");
+            $("#header").load("template/header.html");
+        });
+    </script>
 
 </html>
