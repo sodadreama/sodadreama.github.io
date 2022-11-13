@@ -6,7 +6,7 @@
     background-image: url("background.jpg");
     min-height: 300px;
     background-attachment: fixed;
-    background-position: center;
+    background-position: left;
     background-repeat: no-repeat;
     background-size: cover;
 }
