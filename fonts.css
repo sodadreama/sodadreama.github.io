@@ -3,8 +3,8 @@
 }
 
 .fixed-bg{
-    background-image: url("collage.png");
-    min-height: 500px;
+    background-image: url("background.jpg");
+    min-height: 300px;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -12,7 +12,15 @@
 }
 
 .main-bg{
-    background-color: blanchedalmond;
+    background-color: rgb(255, 253, 249);
+}
+
+.header-color {
+    background-color: darkseagreen;
+}
+
+.post-color {
+    background-color: white;
 }
 
 div.hidden
