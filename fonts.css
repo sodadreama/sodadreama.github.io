@@ -13,6 +13,11 @@
 
 .main-bg{
     background-color: rgb(255, 255, 255);
+    width: 600px;
+}
+
+.ansur-bg{
+    background-color: white;
 }
 
 .header-color {
